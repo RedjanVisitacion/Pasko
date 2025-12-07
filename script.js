@@ -178,6 +178,7 @@ document.addEventListener('DOMContentLoaded', () => {
     resizeTimer = requestAnimationFrame(() => {
       setupOrnaments();
       setupGarland();
+      fitSceneToViewport();
     });
   });
 
@@ -238,4 +239,23 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
   window.addEventListener('scroll', onScroll, { passive: true });
+
+  // Fit the main scene into the viewport height by scaling the card if needed
+  const cardEl = document.querySelector('.card.bg-glass');
+  function fitSceneToViewport() {
+    if (!cardEl) return;
+    // Reset before measuring
+    cardEl.style.transform = 'none';
+
+    const cardRect = cardEl.getBoundingClientRect();
+    const topGap = Math.max(0, cardRect.top); // distance from top of viewport
+    const available = window.innerHeight - topGap - 16; // 16px bottom breathing room
+    const cardHeight = cardEl.offsetHeight;
+    const scale = Math.min(1, available / cardHeight);
+    cardEl.style.transformOrigin = 'top center';
+    cardEl.style.transform = `scale(${scale})`;
+  }
+
+  // Initial fit
+  fitSceneToViewport();
 });
