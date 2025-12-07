@@ -1,0 +1,469 @@
+/* Theme variables */
+:root {
+  --bg-top: #0d1b2a;
+  --bg-bottom: #1b263b;
+  --snow: rgba(255, 255, 255, 0.9);
+  --tree-green: #1f8a5b;
+  --tree-dark: #16724a;
+  --tree-shadow: rgba(0,0,0,0.2);
+  --trunk: #7b4b28;
+  --star: #ffd166;
+  --light-on: #ffe066;
+  --light-off: #444444;
+  --ornament-red: #ff4d6d;
+  --ornament-blue: #4dabf7;
+  --ornament-gold: #ffd43b;
+}
+
+/* Page layout */
+html, body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  background: linear-gradient(180deg, var(--bg-top), var(--bg-bottom));
+  color: #f8f9fa;
+  overflow-x: hidden;
+}
+
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(800px 200px at 70% 10%, rgba(255,255,255,0.05), transparent 60%),
+    radial-gradient(600px 260px at 20% 30%, rgba(255,255,255,0.05), transparent 60%);
+  mix-blend-mode: screen;
+}
+
+.snow-layer {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* Tree container */
+.tree-wrap {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  padding: 90px 20px 80px;
+  min-height: 460px; /* ensure ground and trunk are inside card */
+  gap: 0;
+}
+.tree-wrap::after { /* soft shadow ellipse under tree */
+  content: "";
+  position: absolute;
+  bottom: 110px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 18px;
+  background: radial-gradient(ellipse at center, rgba(0,0,0,0.35), rgba(0,0,0,0) 70%);
+  filter: blur(4px);
+  opacity: 0.4;
+}
+
+.tree {
+  position: relative;
+  width: 320px; /* matches ornaments default width */
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Tree layers (triangles) */
+.layer {
+  position: relative;
+  width: 0;
+  height: 0;
+  border-left: 160px solid transparent;
+  border-right: 160px solid transparent;
+  border-bottom: 140px solid var(--tree-green);
+  filter: drop-shadow(0 10px 10px var(--tree-shadow));
+}
+.layer, .layer.small, .layer.tiny { margin-left: auto; margin-right: auto; }
+.layer::after {
+  content: "";
+  position: absolute;
+  left: -150px;
+  top: 10px;
+  width: 0;
+  height: 0;
+  border-left: 150px solid transparent;
+  border-right: 150px solid transparent;
+  border-bottom: 130px solid var(--tree-dark);
+  opacity: 0.25;
+}
+
+.layer.small {
+  border-left-width: 110px;
+  border-right-width: 110px;
+  border-bottom-width: 100px;
+}
+.layer.small::after {
+  left: -100px;
+  border-left-width: 100px;
+  border-right-width: 100px;
+  border-bottom-width: 90px;
+}
+
+.layer.tiny {
+  border-left-width: 70px;
+  border-right-width: 70px;
+  border-bottom-width: 75px;
+}
+.layer.tiny::after {
+  left: -60px;
+  border-left-width: 60px;
+  border-right-width: 60px;
+  border-bottom-width: 65px;
+}
+
+.layer + .layer {
+  margin-top: -40px;
+}
+
+/* Trunk */
+.trunk {
+  width: 90px;
+  height: 90px;
+  background: linear-gradient(#8f5c38, var(--trunk));
+  margin: -20px auto 0;
+  border-radius: 8px;
+  box-shadow: 0 10px 10px var(--tree-shadow);
+}
+
+/* Star on top */
+.star {
+  --size: 70px;
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%) rotate(0deg);
+  width: var(--size);
+  height: var(--size);
+  color: var(--star);
+  filter: drop-shadow(0 0 10px rgba(255, 209, 102, 0.7));
+  animation: starSpin 12s linear infinite;
+  z-index: 3;
+}
+.star::after { /* glow */
+  content: "";
+  position: absolute;
+  inset: -20%;
+  background: radial-gradient(circle, rgba(255, 209, 102, 0.6), rgba(255, 209, 102, 0) 60%);
+  filter: blur(6px);
+  animation: starPulse 2.8s ease-in-out infinite;
+  border-radius: 50%;
+}
+
+@keyframes starSpin {
+  0% { transform: translateX(-50%) rotate(0deg); }
+  100% { transform: translateX(-50%) rotate(360deg); }
+}
+@keyframes starPulse {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 1; }
+}
+
+/* Ornaments */
+.ornaments {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 45px; /* Below the star */
+  width: 320px;
+  height: 300px;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.ornament {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, rgba(255,255,255,0.7), rgba(255,255,255,0) 40%), var(--ornament-red);
+  box-shadow: 0 0 12px rgba(255,255,255,0.35);
+  animation: twinkle 2.2s ease-in-out infinite;
+  filter: brightness(0.6);
+}
+.ornament::before { /* tiny cap */
+  content: "";
+  position: absolute;
+  top: -3px; left: 50%; transform: translateX(-50%);
+  width: 6px; height: 4px; border-radius: 1px;
+  background: rgba(200,200,200,0.8);
+}
+
+.ornament.blue { background: var(--ornament-blue); }
+.ornament.gold { background: var(--ornament-gold); }
+
+/* Different delays */
+.ornament.d1 { animation-delay: 0.1s; }
+.ornament.d2 { animation-delay: 0.3s; }
+.ornament.d3 { animation-delay: 0.6s; }
+.ornament.d4 { animation-delay: 0.9s; }
+.ornament.d5 { animation-delay: 1.2s; }
+.ornament.d6 { animation-delay: 1.5s; }
+.ornament.d7 { animation-delay: 1.8s; }
+.ornament.d8 { animation-delay: 2.1s; }
+
+@keyframes twinkle {
+  0%, 100% { transform: scale(0.9); filter: brightness(0.6); }
+  50% { transform: scale(1.15); filter: brightness(1.2); }
+}
+
+/* Light garland */
+.garland {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 30px;
+  width: 350px;
+  height: 320px;
+  pointer-events: none;
+  z-index: 2;
+}
+.light {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--light-off);
+  box-shadow: 0 0 0 rgba(255,255,255,0);
+  transition: background 0.3s, box-shadow 0.3s;
+}
+
+.lights-on .light {
+  background: var(--light-on);
+  box-shadow: 0 0 12px rgba(255, 224, 102, 0.9);
+  animation: pulse 1.6s ease-in-out infinite, flicker 1.8s linear infinite;
+}
+.lights-on .light:nth-child(3n) { background: #ff6b6b; box-shadow: 0 0 12px rgba(255,107,107,0.9); }
+.lights-on .light:nth-child(3n+1) { background: #ffd166; box-shadow: 0 0 12px rgba(255,209,102,0.9); }
+.lights-on .light:nth-child(3n+2) { background: #4dabf7; box-shadow: 0 0 12px rgba(77,171,247,0.9); }
+@keyframes flicker {
+  0%, 19%, 21%, 23%, 100% { opacity: 1; }
+  20%, 22% { opacity: 0.6; }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(0.95); }
+  50% { transform: scale(1.05); }
+}
+
+/* Snowflakes */
+.snowflake {
+  position: absolute;
+  top: -10px;
+  color: var(--snow);
+  user-select: none;
+  pointer-events: none;
+  will-change: transform, opacity;
+  animation-name: fall, drift;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes fall {
+  to { transform: translateY(110vh); }
+}
+@keyframes drift {
+  0% { margin-left: 0; }
+  50% { margin-left: 20px; }
+  100% { margin-left: 0; }
+}
+
+/* Footer snow ground */
+.ground {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 120px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.75), rgba(255,255,255,0.95));
+  border-top-left-radius: 50% 30px;
+  border-top-right-radius: 50% 30px;
+  box-shadow: 0 -10px 40px rgba(255,255,255,0.2) inset;
+  z-index: 1;
+}
+
+/* Utility */
+.card.bg-glass {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+/* Extra space below the top controls */
+.card-body > .d-flex:first-child { margin-bottom: 2.25rem !important; }
+
+/* Buttons polish */
+#toggleLights.btn { box-shadow: 0 6px 20px rgba(255,193,7,0.25); }
+#toggleLights.btn:hover { filter: brightness(1.05); transform: translateY(-1px); }
+#toggleSnow.btn { box-shadow: 0 6px 20px rgba(255,255,255,0.12) inset; }
+
+/* Sparkle particles */
+.sparkle {
+  position: absolute;
+  width: 8px; height: 8px; border-radius: 50%;
+  pointer-events: none;
+  background: radial-gradient(circle, rgba(255,255,255,0.95), rgba(255,255,255,0) 70%);
+  animation: sparklePop 900ms ease-out forwards;
+  mix-blend-mode: screen;
+}
+@keyframes sparklePop {
+  0% { transform: scale(0.4); opacity: 0; }
+  50% { transform: scale(1.2); opacity: 1; }
+  100% { transform: scale(1.6); opacity: 0; }
+}
+
+/* Responsive adjustments */
+@media (max-width: 991.98px) {
+  .tree-wrap { padding: 72px 16px 70px; min-height: 400px; }
+  .tree { width: 280px; }
+  .star { top: -18px; }
+
+  /* scale layers */
+  .layer {
+    border-left-width: 140px;
+    border-right-width: 140px;
+    border-bottom-width: 120px;
+  }
+  .layer::after {
+    left: -130px;
+    border-left-width: 130px;
+    border-right-width: 130px;
+    border-bottom-width: 110px;
+  }
+  .layer.small {
+    border-left-width: 95px;
+    border-right-width: 95px;
+    border-bottom-width: 86px;
+  }
+  .layer.small::after {
+    left: -86px;
+    border-left-width: 86px;
+    border-right-width: 86px;
+    border-bottom-width: 78px;
+  }
+  .layer.tiny {
+    border-left-width: 62px;
+    border-right-width: 62px;
+    border-bottom-width: 66px;
+  }
+  .layer.tiny::after {
+    left: -54px;
+    border-left-width: 54px;
+    border-right-width: 54px;
+    border-bottom-width: 57px;
+  }
+  .layer + .layer { margin-top: -34px; }
+
+  .trunk { width: 76px; height: 76px; margin-top: -16px; }
+  .star { --size: 60px; top: -44px; }
+
+  .ornaments { width: 280px; height: 260px; top: 40px; }
+  .garland { width: 300px; height: 280px; top: 27px; }
+  .ground { height: 110px; }
+}
+
+@media (max-width: 575.98px) {
+  .hero { align-items: flex-start; }
+  .container { padding-top: 24px !important; }
+  .tree-wrap { padding: 64px 12px 60px; min-height: 340px; }
+  .tree { width: 200px; }
+  .star { top: -14px; }
+  .card-body > .d-flex:first-child { margin-bottom: 2.5rem !important; }
+
+  .layer {
+    border-left-width: 100px;
+    border-right-width: 100px;
+    border-bottom-width: 90px;
+  }
+  .layer::after {
+    left: -92px;
+    border-left-width: 92px;
+    border-right-width: 92px;
+    border-bottom-width: 82px;
+  }
+  .layer.small {
+    border-left-width: 70px;
+    border-right-width: 70px;
+    border-bottom-width: 60px;
+  }
+  .layer.small::after {
+    left: -62px;
+    border-left-width: 62px;
+    border-right-width: 62px;
+    border-bottom-width: 54px;
+  }
+  .layer.tiny {
+    border-left-width: 46px;
+    border-right-width: 46px;
+    border-bottom-width: 50px;
+  }
+  .layer.tiny::after {
+    left: -40px;
+    border-left-width: 40px;
+    border-right-width: 40px;
+    border-bottom-width: 44px;
+  }
+  .layer + .layer { margin-top: -28px; }
+
+  .trunk { width: 56px; height: 56px; margin-top: -12px; }
+  .star { --size: 46px; top: -36px; }
+
+  .ornaments { width: 200px; height: 210px; top: 34px; }
+  .garland { width: 210px; height: 220px; top: 24px; }
+  .ground { height: 96px; }
+
+  .ornament { width: 14px; height: 14px; }
+  .light { width: 9px; height: 9px; }
+}
+
+/* Parallax background layers */
+.parallax { position: absolute; inset: 0; z-index: 0; overflow: hidden; }
+.parallax .layer { position: absolute; left: 0; right: 0; height: 60vh; pointer-events: none; }
+.parallax .layer.back {
+  bottom: 30vh;
+  background:
+    linear-gradient(to bottom, rgba(70, 100, 140, 0.3), rgba(27,38,59,0) 70%);
+  clip-path: polygon(0% 100%, 16% 58%, 30% 72%, 44% 48%, 58% 74%, 76% 46%, 90% 63%, 100% 42%, 100% 100%);
+}
+.parallax .layer.mid {
+  bottom: 18vh;
+  background:
+    linear-gradient(to bottom, rgba(48, 78, 112, 0.35), rgba(27,38,59,0) 70%);
+  clip-path: polygon(0% 100%, 12% 70%, 24% 78%, 40% 54%, 58% 82%, 76% 58%, 88% 75%, 100% 60%, 100% 100%);
+}
+
+/* Gifts near tree base */
+.gifts { position: absolute; left: 50%; bottom: 110px; transform: translateX(-50%); width: 300px; height: 60px; z-index: 2; pointer-events: none; }
+.gift { position: absolute; bottom: 0; width: 46px; height: 34px; border-radius: 6px; box-shadow: 0 6px 10px rgba(0,0,0,0.2); }
+.gift::before { content: ""; position: absolute; left: 50%; top: 0; transform: translate(-50%, -40%); width: 8px; height: 12px; background: currentColor; border-radius: 2px; box-shadow: 0 0 0 4px rgba(255,255,255,0.5) inset; opacity: 0.9; }
+.gift::after { content: ""; position: absolute; inset: 0; background: repeating-linear-gradient(90deg, rgba(255,255,255,0.35) 0 4px, transparent 4px 10px); border-radius: 6px; mix-blend-mode: overlay; }
+.gift.g1 { left: 14%; background: #ff6b6b; color: #d9480f; }
+.gift.g2 { left: 42%; background: #4dabf7; color: #1c7ed6; width: 52px; height: 38px; }
+.gift.g3 { left: 70%; background: #ffd166; color: #f59f00; width: 40px; height: 30px; }
+
+/* Countdown styles */
+.countdown .cd { min-width: 92px; padding: 10px 12px; border-radius: 999px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); backdrop-filter: blur(6px); }
+.countdown .num { font-size: 1.25rem; font-weight: 700; line-height: 1; }
+.countdown .lbl { font-size: .75rem; opacity: .85; }
+
+@media (max-width: 991.98px) {
+  .gifts { bottom: 100px; width: 240px; }
+}
+@media (max-width: 575.98px) {
+  .gifts { bottom: 92px; width: 200px; }
+}

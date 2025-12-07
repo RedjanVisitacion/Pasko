@@ -1,0 +1,94 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Christmas Tree</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="hero d-flex">
+      <div class="snow-layer" id="snow-layer" aria-hidden="true"></div>
+      <!-- Parallax background layers -->
+      <div class="parallax" aria-hidden="true">
+        <div class="layer back"></div>
+        <div class="layer mid"></div>
+      </div>
+
+      <div class="container py-5">
+        <div class="row justify-content-center">
+          <div class="col-12 text-center mb-4">
+            <h1 class="display-5 fw-bold">Merry Christmas</h1>
+            <p class="text-light-50 mb-3">Greatings from Redjan Phil</p>
+            <!-- Countdown -->
+            <div id="countdown" class="countdown d-flex justify-content-center gap-3 flex-wrap mb-3">
+              <div class="cd badge-pill">
+                <div class="num" id="cd-days">00</div>
+                <div class="lbl">Days</div>
+              </div>
+              <div class="cd badge-pill">
+                <div class="num" id="cd-hours">00</div>
+                <div class="lbl">Hours</div>
+              </div>
+              <div class="cd badge-pill">
+                <div class="num" id="cd-mins">00</div>
+                <div class="lbl">Minutes</div>
+              </div>
+              <div class="cd badge-pill">
+                <div class="num" id="cd-secs">00</div>
+                <div class="lbl">Seconds</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-md-10 col-lg-8">
+            <div class="card bg-glass shadow-lg border-0">
+              <div class="card-body p-4 p-md-5">
+                <div class="d-flex justify-content-center mb-4 gap-2 flex-wrap">
+                  <button id="toggleLights" class="btn btn-warning">Toggle Lights</button>
+                  <button id="toggleSnow" class="btn btn-outline-light">Toggle Snow</button>
+                </div>
+
+                <div class="tree-wrap position-relative">
+                  <svg class="star" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <polygon fill="currentColor" points="50,5 61,36 95,36 67,55 78,86 50,68 22,86 33,55 5,36 39,36"/>
+                  </svg>
+
+                  <div class="tree">
+                    <div class="layer tiny"></div>
+                    <div class="layer small"></div>
+                    <div class="layer"></div>
+                    <div class="trunk"></div>
+                  </div>
+
+                  <div class="ornaments" id="ornaments" aria-hidden="true"></div>
+                  <div class="garland" id="garland" aria-hidden="true"></div>
+                  <!-- Gifts -->
+                  <div class="gifts" aria-hidden="true">
+                    <span class="gift g1"></span>
+                    <span class="gift g2"></span>
+                    <span class="gift g3"></span>
+                  </div>
+                  <div class="ground" aria-hidden="true"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous"
+    ></script>
+    <script src="./script.js"></script>
+  </body>
+</html>
