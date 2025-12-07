@@ -1,4 +1,17 @@
 document.addEventListener('DOMContentLoaded', () => {
+  // Background audio: try autoplay, then fallback to first user interaction
+  const bgAudio = document.getElementById('bg-audio');
+  if (bgAudio) {
+    bgAudio.loop = true;
+    const tryPlay = () => bgAudio.play().catch(() => {});
+    tryPlay();
+    const resume = () => { tryPlay(); window.removeEventListener('pointerdown', resume); window.removeEventListener('keydown', resume); };
+    window.addEventListener('pointerdown', resume, { once: true, passive: true });
+    window.addEventListener('keydown', resume, { once: true });
+    document.addEventListener('visibilitychange', () => {
+      if (!document.hidden) tryPlay();
+    });
+  }
   const snowLayer = document.getElementById('snow-layer');
   const ornamentsEl = document.getElementById('ornaments');
   const garlandEl = document.getElementById('garland');

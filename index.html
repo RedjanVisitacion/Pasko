@@ -16,11 +16,20 @@
   </head>
   <body>
     <main class="hero d-flex">
+      <audio id="bg-audio" src="./assets/audio/ChristmasSong.weba" preload="auto" autoplay loop playsinline></audio>
       <div class="snow-layer" id="snow-layer" aria-hidden="true"></div>
       <!-- Parallax background layers -->
       <div class="parallax" aria-hidden="true">
         <div class="para-layer back"></div>
         <div class="para-layer mid"></div>
+      </div>
+
+      <!-- Moon background element -->
+      <div class="moon" aria-hidden="true"></div>
+
+      <!-- Santa flight animation layer -->
+      <div class="santa-flight" aria-hidden="true">
+        <img class="santa-img" src="./assets/img/SantaFly.png" alt="Santa flying across the night sky" />
       </div>
 
       <div class="container py-5">
